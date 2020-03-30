@@ -87,11 +87,11 @@ function unifyDataContentFile(dataFields, contentString) {
 exports.unifyDataContentFile = unifyDataContentFile;
 /// find all markdown, mdx files in folder and return array
 
-function validateFileAndReturn(file, schema) {
+function validateFileAndReturn(file, schema, variables) {
   let fileString = fs.readFileSync(file).toLocaleString();
   let extracted = frontmatter(fileString);
 
-  let finalData = fieldsValidator(extracted.data, schema);
+  let finalData = fieldsValidator(extracted.data, schema, variables);
   return unifyDataContentFile(finalData, extracted.content);
 }
 

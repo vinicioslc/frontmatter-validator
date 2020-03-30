@@ -2,6 +2,11 @@
 
 All changes ocurred during time.
 
+- 1.0.4
+
+  - Added support for env variables for `string` values
+  - Added `FILENAME` enviroment support for file name without extension
+
 - 1.0.3
 
   - Reverted 1.0.2 fix and fixed again

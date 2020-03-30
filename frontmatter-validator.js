@@ -1,20 +1,28 @@
 const fs = require("fs");
 const filesHelpers = require("./helpers/files-helpers");
+const { extractPathVariables } = require("./helpers/data-helpers");
 
 function validateFiles(
   dirToSearch = "./",
   schemaObject,
   extArray = [".md", ".mdx"]
 ) {
+  let envVariables = process.env;
   return (
     filesHelpers
       // find all files
       .getAllFiles(dirToSearch, extArray)
       // validate content data from files
       .map(path => {
+        // get variables like FILENAME to be injected
+        let variablesUsed = extractPathVariables(path, envVariables);
         return {
           path: path,
-          content: filesHelpers.validateFileAndReturn(path, schemaObject)
+          content: filesHelpers.validateFileAndReturn(
+            path,
+            schemaObject,
+            variablesUsed
+          )
         };
       })
       // read and write all files

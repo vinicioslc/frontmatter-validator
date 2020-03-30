@@ -21,35 +21,37 @@ Frontmatter Validator will pass in every single file with extension '.md', '.mdx
 #### Example before validation
 
 ```yml
----
-title: Code Example
-date: "2019-06-06"
-draft: true
-example: false
-path: /posts/code-example
-tags:
-  - Tag
-categories: []
----
-## An Code example with ...
+`post-example.md`
+    ---
+    title: Code Example
+    date: "2019-06-06"
+    draft: true
+    example: false
+    path: /posts/code-example
+    tags:
+      - Tag
+    categories: []
+    ---
+    ## An Code example with ...
 ```
 
 #### Example after validation
 
 ```yml
----
-title: Code Example
-date: "2019-06-06"
-draft: true
-example: false
-path: /posts/code-example
-tags:
-  - Tag
- categories:
-++  - Category
-++ hero: /hero.png
----
-## An Code example with ...
+`post-example.md`
+    ---
+    title: Code Example
+    date: "2019-06-06"
+    draft: true
+    example: false
+    path: /posts/code-example
+    tags:
+      - Tag
+++  categories:
+++    - Category
+++  hero: /hero.png
+    ---
+    ## An Code example with ...
 ```
 
 ## Arguments used
@@ -59,3 +61,55 @@ tags:
 | --schema     | Path to schema.json file                       | yes       | "./frontmatter-schema.json" |     |
 | --path       | Path to folder or file with extension provided | yes       | current dir "./"            |     |
 | --extensions | Allowed File Extensions list                   | yes       | ".md,.mdx"                  |     |
+
+## Enviroment variables support ^-^
+
+Now you can inject some variables like filename `{FILENAME}` this will be replaced by filename from file readed.
+
+> for while only works with string
+
+## Variables available
+
+| name      | what is ?                                         |
+| --------- | ------------------------------------------------- |
+| FILENAME  | Filename extracted with path.basename() from file |
+| {ANY_ENV} | Any env present in ``process.env` variable        |
+
+#### Schema Json File With Variables
+
+```json
+`frontmatter-schema.json`
+{
+  "draft": false,
+  "hero": "/hero.png",
+  "path": "/posts/{FILENAME}-post",
+  "categories": ["Category"]
+}
+```
+
+#### Example Before validation
+
+```yml
+`post-example.md`
+    ---
+    title: Code Example
+    date: "2019-06-06"
+    draft: true
+    example: false
+    ---
+    ## An Code example with ...
+```
+
+#### Example After validation
+
+```yml
+`post-example.md`
+    ---
+    title: Code Example
+    date: "2019-06-06"
+    draft: true
+    example: false
+++  path: /posts/post-example-post
+    ---
+    ## An Code example with ...
+```
