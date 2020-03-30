@@ -45,9 +45,9 @@ example: false
 path: /posts/code-example
 tags:
   - Tag
-categories:
-  - Category
-hero: /hero.png
+ categories:
+++  - Category
+++ hero: /hero.png
 ---
 ## An Code example with ...
 ```
