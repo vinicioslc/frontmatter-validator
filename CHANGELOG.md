@@ -2,6 +2,11 @@
 
 All changes ocurred during time.
 
+- 1.0.6
+
+  - Hotfix in variables schema
+  - Added new variable file extension
+
 - 1.0.5
 
   - Added continuous integration support

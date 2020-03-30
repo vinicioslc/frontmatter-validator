@@ -1,6 +1,6 @@
 const fs = require("fs");
 const filesHelpers = require("./helpers/files-helpers");
-const { extractPathVariables } = require("./helpers/data-helpers");
+const { injectPathVariables } = require("./helpers/data-helpers");
 
 function validateFiles(
   dirToSearch = "./",
@@ -15,7 +15,7 @@ function validateFiles(
       // validate content data from files
       .map(path => {
         // get variables like FILENAME to be injected
-        let variablesUsed = extractPathVariables(path, envVariables);
+        let variablesUsed = injectPathVariables(path, envVariables);
         return {
           path: path,
           content: filesHelpers.validateFileAndReturn(

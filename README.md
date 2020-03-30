@@ -72,10 +72,11 @@ Now you can inject some variables like filename `{FILENAME}` this will be replac
 
 ## Variables available
 
-| name      | what is ?                                         |
-| --------- | ------------------------------------------------- |
-| FILENAME  | Filename extracted with path.basename() from file |
-| {ANY_ENV} | Any env present in ``process.env` variable        |
+| name      | what is ?                                            |
+| --------- | ---------------------------------------------------- |
+| FILENAME  | Filename extracted with path.basename(filePath)      |
+| FILE_EXT  | File Extension extracted with path.extname(filePath) |
+| {ANY_ENV} | Any env present in ``process.env` variable           |
 
 #### Schema Json File With Variables
 

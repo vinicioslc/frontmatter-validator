@@ -1,16 +1,35 @@
 const path = require("path");
 
+function injectPathVariables(filePath, variablesObject) {
+  let file_ext = path.extname(filePath);
+  let filename =
+    path.basename(filePath).replace(file_ext, "") || "ERROR_FILENAME";
+
+  variablesObject["FILENAME"] = filename;
+  variablesObject["FILE_EXT"] = file_ext;
+  return variablesObject;
+}
+
+exports.injectPathVariables = injectPathVariables;
+
 function injectVariable(pureValue, variables) {
-  let injected = pureValue;
-  for (const key in variables) {
-    if (variables.hasOwnProperty(key)) {
-      const variableValue = variables[key];
-      if (typeof injected == "string" && injected != "") {
-        injected.replace(`\{${key}\}`, variableValue);
+  let changedValue = pureValue;
+  for (const variableKey in variables) {
+    if (variables.hasOwnProperty(variableKey)) {
+      const variableValue = variables[variableKey];
+      if (
+        (typeof changedValue === "string" || changedValue instanceof String) &&
+        changedValue.includes(variableKey)
+      ) {
+        // replace key in value with variable value
+        changedValue = changedValue.replace(
+          `\{${variableKey}\}`,
+          variableValue
+        );
       }
     }
   }
-  return injected;
+  return changedValue;
 }
 /**
  *
@@ -23,14 +42,14 @@ function fieldsValidator(dataIn, valuesSchema, variables) {
   for (const schemaKey in valuesSchema) {
     const defaultValue = valuesSchema[schemaKey];
 
-    dataOut[schemaKey] = injectVariable(dataOut[schemaKey], variables);
-
     if (
       dataOut[schemaKey] === undefined ||
       dataOut[schemaKey] === null ||
       dataOut[schemaKey] === ""
     ) {
       dataOut[schemaKey] = defaultValue;
+      // inject variables
+      dataOut[schemaKey] = injectVariable(dataOut[schemaKey], variables);
     } else {
       if (Array.isArray(dataOut[schemaKey]) && dataOut[schemaKey].length <= 0) {
         dataOut[schemaKey] = defaultValue;
@@ -41,15 +60,3 @@ function fieldsValidator(dataIn, valuesSchema, variables) {
 }
 
 exports.fieldsValidator = fieldsValidator;
-
-function extractPathVariables(filePath, variablesObject) {
-  let extractedName =
-    path.basename(filePath).replace(path.extname(filePath), "") ||
-    "ERROR_FILENAME";
-
-  variablesObject.FILENAME = extractedName;
-
-  return variablesObject;
-}
-
-exports.extractPathVariables = extractPathVariables;
