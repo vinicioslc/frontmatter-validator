@@ -2,6 +2,10 @@
 
 All changes ocurred during time.
 
+- 1.0.5
+
+  - Added continuous integration support
+
 - 1.0.4
 
   - Added support for env variables for `string` values

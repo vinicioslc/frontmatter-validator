@@ -2,7 +2,7 @@
   "name": "frontmatter-validator",
   "author": "Vinicios Lima <vinicioslc@outlook.com>",
   "license": "MIT",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "CLI for validate all frontmatter files in desired directory.",
   "main": "cli.js",
   "files": [

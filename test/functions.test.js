@@ -67,7 +67,7 @@ function deleteFile(filepath) {
   }
 }
 const makeTestFile = origin => {
-  let fpath = path.normalize(getCurDir("/" + makeRandomString(5) + ".md"));
+  let fpath = getCurDir("/" + makeRandomString(5) + ".md");
   fs.writeFileSync(fpath, fs.readFileSync(origin));
 
   return fpath;
