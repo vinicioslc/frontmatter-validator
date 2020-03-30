@@ -1,5 +1,7 @@
 # Frontmatter Validator
 
+![Node.js CI](https://github.com/vinicioslc/frontmatter-validator/workflows/Node.js%20CI/badge.svg?branch=master)
+
 A simple cli to validate all frontmatter files including .md .mdx extension.
 
 Simply `npm i -g frontmatter-validator`

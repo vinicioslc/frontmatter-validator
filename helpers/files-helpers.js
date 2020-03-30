@@ -20,14 +20,15 @@ function pushValidFile(toPushPath, extensions, filesArray) {
   }
   return filesArray;
 }
-function getAllFiles(dirToSearch, extensions = [".mdx", ".md"]) {
+function getAllFiles(inputDir, extensions = [".mdx", ".md"]) {
+  let normalizedDir = path.resolve(inputDir);
   let filesArray = [];
-  dirToSearch = getResolvedPath(dirToSearch);
-  if (fs.existsSync(dirToSearch)) {
-    if (fs.lstatSync(dirToSearch).isDirectory()) {
+  normalizedDir = getResolvedPath(normalizedDir);
+  if (fs.existsSync(normalizedDir)) {
+    if (fs.lstatSync(normalizedDir).isDirectory()) {
       let dirEntries = fs
-        .readdirSync(dirToSearch)
-        .map(dir => getResolvedPath(dirToSearch + "/" + dir));
+        .readdirSync(normalizedDir)
+        .map(dir => getResolvedPath(normalizedDir + "/" + dir));
       if (dirEntries.length > 0) {
         for (let entry of dirEntries) {
           if (fs.lstatSync(entry).isDirectory()) {
@@ -41,8 +42,8 @@ function getAllFiles(dirToSearch, extensions = [".mdx", ".md"]) {
         }
       }
     } else {
-      if (isValidExtension(extensions, dirToSearch)) {
-        filesArray = pushValidFile(dirToSearch, extensions, filesArray);
+      if (isValidExtension(extensions, normalizedDir)) {
+        filesArray = pushValidFile(normalizedDir, extensions, filesArray);
       } else {
         throw new InvalidFileExtensionException(
           "File provided with invalid extension none of :" +
@@ -51,7 +52,7 @@ function getAllFiles(dirToSearch, extensions = [".mdx", ".md"]) {
       }
     }
   } else {
-    throw new PathNotExistsException("Path don't exists : " + dirToSearch);
+    throw new PathNotExistsException("Path don't exists : " + normalizedDir);
   }
   return filesArray;
 }
