@@ -1,5 +1,3 @@
-"use-strict";
-
 const path = require("path");
 const findArguments = require("./helpers/arguments-cli").findArgument;
 const { validateFiles } = require("./frontmatter-validator");

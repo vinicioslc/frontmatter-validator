@@ -1,5 +1,3 @@
-"use-strict";
-
 const frontmatter = require("frontmatter");
 const path = require("path");
 const jsYaml = require("js-yaml");

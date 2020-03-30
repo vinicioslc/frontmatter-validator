@@ -1,4 +1,3 @@
-"use-strict";
 const fs = require("fs");
 const filesHelpers = require("./helpers/files-helpers");
 
