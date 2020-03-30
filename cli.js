@@ -20,12 +20,12 @@ async function main() {
   console.log("Finding files in :", markdownPath);
   console.log("Schema Object :", schemaPath);
   console.log("Extensions Searched :", extensions);
-  console.time("Convert Time");
-  let convertedFiles = validateFiles(markdownPath, schemaObj, extensions);
-  console.timeEnd("Convert Time");
-  console.log("Total files :", convertedFiles.length);
+  console.time("Validate Time");
+  let validatedFiles = validateFiles(markdownPath, schemaObj, extensions);
+  console.timeEnd("Validate Time");
+  console.log("Total files :", validatedFiles.length);
 
-  console.log("Converted List:\r\n", convertedFiles.join("\r\n"));
+  console.log("Validated List:\r\n", validatedFiles.join("\r\n"));
 }
 
 main();

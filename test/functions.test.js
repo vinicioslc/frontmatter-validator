@@ -40,11 +40,11 @@ test("should get files without problems", () => {
   expect(true).toBe(true);
 });
 
-test("should convert file entirely with success", () => {
+test("should validate file entirely with success", () => {
   let generatedFile = makeTestFile(__dirname + "/before-validate.md");
 
   // -- checks
-  let converted = filesHelpers.validateFileAndReturn(generatedFile, {
+  let validatedFile = filesHelpers.validateFileAndReturn(generatedFile, {
     draft: false,
     hero: "/hero.png",
     categories: ["Category"]
@@ -54,7 +54,7 @@ test("should convert file entirely with success", () => {
     .toLocaleString();
 
   deleteFile(generatedFile);
-  expect(converted.split("\r\n").join("\n")).toBe(
+  expect(validatedFile.split("\r\n").join("\n")).toBe(
     expected.split("\r\n").join("\n")
   );
 });
