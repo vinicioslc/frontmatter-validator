@@ -4,7 +4,7 @@
   "license": "MIT",
   "version": "1.0.0",
   "description": "CLI for validate all frontmatter files in desired directory.",
-  "main": "cli.js",
+  "main": "frontmatter-validator.js",
   "scripts": {
     "test": "jest --coverage"
   },
