@@ -6,7 +6,9 @@ example: false
 path: /posts/code-example
 tags:
   - Tag
-categories: []
+categories:
+  - FailCategory
+hero: /hero.png
 ---
 
 ## An Code example with

@@ -6,9 +6,9 @@
   "description": "CLI for validate all frontmatter files in desired directory.",
   "main": "cli.js",
   "files": [
-    "./helpers/*",
-    "./cli.js",
-    "./frontmatter-validator.js"
+    "helpers/*",
+    "cli.js",
+    "frontmatter-validator.js"
   ],
   "repository": {
     "type": "git",
