@@ -1,0 +1,26 @@
+{
+  "name": "frontmatter-validator",
+  "author": "Vinicios Lima <vinicioslc@outlook.com>",
+  "license": "MIT",
+  "version": "1.0.0",
+  "description": "CLI for validate all frontmatter files in desired directory.",
+  "main": "cli.js",
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "keywords": [
+    "frontmatter",
+    "validator",
+    "normalizer",
+    "folders",
+    "markdown",
+    "files"
+  ],
+  "devDependencies": {
+    "jest": "^25.2.3"
+  },
+  "dependencies": {
+    "frontmatter": "0.0.3",
+    "js-yaml": "^3.13.1"
+  }
+}
