@@ -1,21 +1,19 @@
 const path = require("path");
 const fs = require("fs");
 const filesHelpers = require("../helpers/files-helpers");
-const validator = require("../frontmatter-validator");
-
 test("should return post-3", () => {
-  let files = filesHelpers.getAllFiles(__dirname + "\\test-subfolder\\");
+  let files = filesHelpers.getAllFiles(getCurDir("/test-subfolder/"));
   let example = [];
-  example.push(__dirname + "\\test-subfolder\\example1.md");
-  example.push(__dirname + "\\test-subfolder\\example2.mdx");
-  example.push(__dirname + "\\test-subfolder\\subfolder\\subfile.md");
+  example.push(getCurDir("/test-subfolder/example1.md"));
+  example.push(getCurDir("/test-subfolder/example2.mdx"));
+  example.push(getCurDir("/test-subfolder/subfolder/subfile.md"));
 
   expect(files.toString()).toBe(example.toString());
 });
 
 test("should be an invalid path exception", () => {
   try {
-    filesHelpers.getAllFiles(__dirname + "\\test-error\\");
+    filesHelpers.getAllFiles(getCurDir("/test-error"));
     expect(false).toBe(true);
   } catch (error) {
     expect(error.constructor.name).toBe("PathNotExistsException");
@@ -24,24 +22,24 @@ test("should be an invalid path exception", () => {
 
 test("should be an invalid extension exception", () => {
   try {
-    filesHelpers.getAllFiles(__dirname + "\\invalid-file-extension.mdc");
+    filesHelpers.getAllFiles(getCurDir("/invalid-file-extension.mdc"));
     expect(false).toBe(true);
   } catch (error) {
     expect(error.constructor.name).toBe("InvalidFileExtensionException");
   }
 });
 test("should validate file with no problems", () => {
-  let result = filesHelpers.getAllFiles(__dirname + "\\after-validate.md");
+  let result = filesHelpers.getAllFiles(getCurDir("/after-validate.md"));
   expect(true).toBe(true);
 });
 
 test("should get files without problems", () => {
-  let files = filesHelpers.getAllFiles(__dirname + "\\test-fix\\");
+  let files = filesHelpers.getAllFiles(getCurDir("/test-fix/"));
   expect(true).toBe(true);
 });
 
 test("should validate file entirely with success", () => {
-  let generatedFile = makeTestFile(__dirname + "/before-validate.md");
+  let generatedFile = makeTestFile(getCurDir("/before-validate.md"));
 
   // -- checks
   let validatedFile = filesHelpers.validateFileAndReturn(generatedFile, {
@@ -50,7 +48,7 @@ test("should validate file entirely with success", () => {
     categories: ["Category"]
   });
   let expected = fs
-    .readFileSync(__dirname + "/after-validate.md")
+    .readFileSync(getCurDir("/after-validate.md"))
     .toLocaleString();
 
   deleteFile(generatedFile);
@@ -69,7 +67,7 @@ function deleteFile(filepath) {
   }
 }
 const makeTestFile = origin => {
-  let fpath = __dirname + "/" + makeRandomString(5) + ".md";
+  let fpath = path.normalize(getCurDir("/" + makeRandomString(5) + ".md"));
   fs.writeFileSync(fpath, fs.readFileSync(origin));
 
   return fpath;
@@ -84,4 +82,10 @@ function makeRandomString(length) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;
+}
+
+function getCurDir(dir) {
+  let p = path.resolve(path.normalize(__dirname + "/" + dir));
+  console.log(p);
+  return p;
 }
