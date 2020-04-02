@@ -86,6 +86,5 @@ function makeRandomString(length) {
 
 function getCurDir(dir) {
   let p = path.resolve(path.normalize(__dirname + "/" + dir));
-  console.log(p);
   return p;
 }

@@ -5,7 +5,7 @@ const fs = require("fs");
 
 const { fieldsValidator } = require("./data-helpers");
 
-const isValidExtension = (extensions, filename) => {
+const hasValidExtension = (extensions, filename) => {
   let toReturn = false;
   for (const extension of extensions) {
     if (filename.endsWith(extension)) {
@@ -14,11 +14,14 @@ const isValidExtension = (extensions, filename) => {
   }
   return toReturn;
 };
-function pushValidFile(toPushPath, extensions, filesArray) {
-  if (isValidExtension(extensions, toPushPath)) {
-    filesArray.push(toPushPath);
+function pushValidFile(fileToPush, extensions, filesReference) {
+  if (Array.isArray(fileToPush)) {
+    throw new Error("Only push one valid file per time.");
   }
-  return filesArray;
+  if (hasValidExtension(extensions, fileToPush)) {
+    filesReference.push(fileToPush);
+  }
+  return filesReference;
 }
 function getAllFiles(inputDir, extensions = [".mdx", ".md"]) {
   let normalizedDir = path.resolve(inputDir);
@@ -30,19 +33,22 @@ function getAllFiles(inputDir, extensions = [".mdx", ".md"]) {
         .readdirSync(normalizedDir)
         .map(dir => getResolvedPath(normalizedDir + "/" + dir));
       if (dirEntries.length > 0) {
-        for (let entry of dirEntries) {
-          if (fs.lstatSync(entry).isDirectory()) {
+        for (const curDirEntry of dirEntries) {
+          if (fs.lstatSync(curDirEntry).isDirectory()) {
             // get files if is directory
-            let files = getAllFiles(entry);
-            filesArray = pushValidFile(...files, extensions, filesArray);
-          } else if (fs.lstatSync(entry).isFile()) {
+            let files = getAllFiles(curDirEntry);
+            for (const filesGetted of files) {
+              filesArray = pushValidFile(filesGetted, extensions, filesArray);
+            }
+          }
+          if (fs.lstatSync(curDirEntry).isFile()) {
             // push as file when are file
-            filesArray = pushValidFile(entry, extensions, filesArray);
+            filesArray = pushValidFile(curDirEntry, extensions, filesArray);
           }
         }
       }
     } else {
-      if (isValidExtension(extensions, normalizedDir)) {
+      if (hasValidExtension(extensions, normalizedDir)) {
         filesArray = pushValidFile(normalizedDir, extensions, filesArray);
       } else {
         throw new InvalidFileExtensionException(

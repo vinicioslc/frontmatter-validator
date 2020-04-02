@@ -2,6 +2,10 @@
 
 All changes ocurred during time.
 
+- 1.0.7
+
+  - Hotfix when push multiples files in `pushValidFile()` function added array checking too.
+
 - 1.0.6
 
   - Hotfix in variables schema
