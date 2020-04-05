@@ -6,12 +6,12 @@ const { validateFiles } = require("./frontmatter-validator");
 async function main() {
   let markdownPath = findArguments("path", "./");
 
-  let schemaPath = findArguments("schema", "./frontmatter-schema.json");
+  let schemaPath = findArguments("schema", "./.frontmatter-validator");
 
-  let schemaObj = JSON.parse(
+  let { schema, ignored } = JSON.parse(
     fs.readFileSync(path.resolve(schemaPath).toString("utf-8"))
   );
-  if (!schemaObj) {
+  if (!schema) {
     throw new Error("Schema Object invalid");
   }
 
@@ -21,7 +21,7 @@ async function main() {
   console.log("Schema Object :", schemaPath);
   console.log("Extensions Searched :", extensions);
   console.time("Validate Time");
-  let validatedFiles = validateFiles(markdownPath, schemaObj, extensions);
+  let validatedFiles = validateFiles(markdownPath, schema, extensions);
   console.timeEnd("Validate Time");
   console.log("Total files :", validatedFiles.length);
 

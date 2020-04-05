@@ -6,25 +6,30 @@ A simple cli to validate all frontmatter files including .md .mdx extension.
 
 Simply `npm i -g frontmatter-validator`
 
-And then simply run `frontmatter-validator --path ./md/or/dir --schema ./path/to/schema.json --extensions .md,.mdx`
+And then simply run `frontmatter-validator --path ./md/or/dir --schema ./.frontmatter-validator --extensions .md,.mdx`
 
-Frontmatter Validator will pass in every single file with extension '.md', '.mdx' searching for empty values and replacing him with default values present in `frontmatter-schema.json` file
+Frontmatter Validator will pass in every single file with extension '.md', '.mdx' searching for empty values and replacing him with default values present in `.frontmatter-validator` file
 
 ## Cli available arguments
 
-| name         | what is ?                                      | optional? | default value               |     |
-| ------------ | ---------------------------------------------- | --------- | --------------------------- | --- |
-| --schema     | Path to schema.json file                       | yes       | "./frontmatter-schema.json" |     |
-| --path       | Path to folder or file with extension provided | yes       | current dir "./"            |     |
-| --extensions | Allowed File Extensions list                   | yes       | ".md,.mdx"                  |     |
+| name         | what is ?                                      | optional? | default value              |     |
+| ------------ | ---------------------------------------------- | --------- | -------------------------- | --- |
+| --schema     | Path to schema.json file                       | yes       | "./.frontmatter-validator" |     |
+| --path       | Path to folder or file with extension provided | yes       | current dir "./"           |     |
+| --extensions | Allowed File Extensions list                   | yes       | ".md,.mdx"                 |     |
 
 #### Schema Json File
 
 ```json
+`.frontmatter-validator`
+
 {
-  "draft": false,
-  "hero": "/hero.png",
-  "categories": ["Category"]
+  "ignored": ["index.md"],
+  "schema": {
+    "draft": false,
+    "hero": "/hero.png",
+    "categories": ["Category"]
+  }
 }
 ```
 
@@ -81,12 +86,14 @@ Now you can inject some variables like filename `{FILENAME}` this will be replac
 #### Schema Json File With Variables
 
 ```json
-`frontmatter-schema.json`
+`.frontmatter-validator`
 {
-  "draft": false,
-  "hero": "/hero.png",
-  "path": "/posts/{FILENAME}-post",
-  "categories": ["Category"]
+  "schema": {
+    "draft": false,
+    "hero": "/hero.png",
+    "path": "/posts/{FILENAME}-post",
+    "categories": ["Category"]
+  }
 }
 ```
 

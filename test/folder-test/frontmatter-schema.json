@@ -1,6 +1,0 @@
-{
-  "draft": true,
-  "hero": "/hero.png",
-  "path": "/{FILENAME}{FILE_EXT}",
-  "categories": ["FailCategory"]
-}
