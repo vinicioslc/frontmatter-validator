@@ -15,7 +15,8 @@
     "url": "https://github.com/vinicioslc/frontmatter-validator"
   },
   "scripts": {
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "validate": "node . --path ./test-validate --schema ./test-validate/.frontmatter-schema"
   },
   "keywords": [
     "frontmatter",

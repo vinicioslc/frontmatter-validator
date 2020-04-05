@@ -16,6 +16,7 @@ const hasValidExtension = (extensions, filename) => {
 };
 function pushValidFile(fileToPush, extensions, filesReference) {
   if (Array.isArray(fileToPush)) {
+    // TODO test coverage really need this ?
     throw new Error("Only push one valid file per time.");
   }
   if (hasValidExtension(extensions, fileToPush)) {
@@ -31,7 +32,7 @@ function getAllFiles(inputDir, extensions = [".mdx", ".md"]) {
     if (fs.lstatSync(normalizedDir).isDirectory()) {
       let dirEntries = fs
         .readdirSync(normalizedDir)
-        .map(dir => getResolvedPath(normalizedDir + "/" + dir));
+        .map((dir) => getResolvedPath(normalizedDir + "/" + dir));
       if (dirEntries.length > 0) {
         for (const curDirEntry of dirEntries) {
           if (fs.lstatSync(curDirEntry).isDirectory()) {
@@ -87,7 +88,7 @@ exports.getResolvedPath = getResolvedPath;
 
 function unifyDataContentFile(dataFields, contentString) {
   let ymlString = jsYaml.safeDump(dataFields, {
-    schema: jsYaml.DEFAULT_FULL_SCHEMA
+    schema: jsYaml.DEFAULT_FULL_SCHEMA,
   });
   return "---\r\n" + ymlString + "---\r\n" + contentString;
 }

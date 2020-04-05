@@ -1,5 +1,6 @@
 const path = require("path");
 
+// TODO Make tests cover this
 function injectPathVariables(filePath, variablesObject) {
   let file_ext = path.extname(filePath);
   let filename =
