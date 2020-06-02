@@ -1,6 +1,7 @@
 # Frontmatter Validator
 
 ![Github Actions CI](https://github.com/vinicioslc/frontmatter-validator/workflows/Node.js%20CI/badge.svg?branch=master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/8c8461237a8718035941/maintainability)](https://codeclimate.com/github/vinicioslc/frontmatter-validator/maintainability)
 
 A simple cli to validate all frontmatter files including .md .mdx extension.
 
